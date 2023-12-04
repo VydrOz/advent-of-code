@@ -72,7 +72,7 @@ class Solution : SolutionBase
 
 record Part
 {
-    public string Text;
+    public required string Text;
     public int X;
     public int Y;
     public int Int => int.Parse(Text);
