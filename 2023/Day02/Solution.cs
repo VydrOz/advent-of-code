@@ -1,7 +1,7 @@
 ﻿namespace AdventOfCode.Y2023.Day02;
 
+using Lib;
 using System.Text.RegularExpressions;
-using AdventOfCode.Solutions;
 
 class Solution : SolutionBase
 {

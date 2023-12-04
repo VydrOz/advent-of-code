@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace AdventOfCode.Solutions;
+namespace Lib;
 
 public abstract class SolutionBase
 {

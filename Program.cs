@@ -1,4 +1,4 @@
-﻿using AdventOfCode.Solutions;
+﻿using Lib;
 
 if (args.Length == 1)
 {

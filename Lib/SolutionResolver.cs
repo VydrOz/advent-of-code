@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode.Solutions;
+﻿namespace Lib;
 
 public static class SolutionResolver
 {
