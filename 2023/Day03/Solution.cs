@@ -17,8 +17,7 @@ class Solution : SolutionBase
 
         return numbers
             .Where(p => specChars.Any(s => AreAdjacent(s, p)))
-            .Select(p => int.Parse(p.Text))
-            .Sum()
+            .Sum(p => p.Int)
             .ToString();
     }
 
@@ -30,9 +29,8 @@ class Solution : SolutionBase
 
         return gears
             .Select(g => numbers.Where(n => AreAdjacent(n, g)))
-            .Where(n => n.Count() == 2)
-            .Select(n => int.Parse(n.First().Text) * int.Parse(n.Last().Text))
-            .Sum()
+            .Where(p => p.Count() == 2)
+            .Sum(p => p.First().Int * p.Last().Int)
             .ToString();
     }
 
@@ -77,5 +75,6 @@ record Part
     public string Text;
     public int X;
     public int Y;
+    public int Int => int.Parse(Text);
     public int Range => Y + Text.Length;
 }
