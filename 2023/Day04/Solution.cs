@@ -12,7 +12,6 @@ class Solution : SolutionBase
 
     protected override string SolvePartOne()
     {
-
         return GetCards()
             .Sum(c => c.Points)
             .ToString();
@@ -39,7 +38,7 @@ class Solution : SolutionBase
     {
         var regex = new Regex(@"Card\s*(\d+):(?:\s*(\d+))* \|(?:\s*(\d+))*");
         return 
-            Input.Select(i =>
+            Input.Split("\n").Select(i =>
             {
                 var matchGroups = regex.Matches(i).First().Groups;
                 return new Card

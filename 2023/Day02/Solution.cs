@@ -9,7 +9,7 @@ class Solution : SolutionBase
 
     protected override string SolvePartOne()
     {
-        return Input.Select(ParseGame)
+        return Input.Split("\n").Select(ParseGame)
             .Where(g => g.Red <= 12 && g.Green <= 13 && g.Blue <= 14)
             .Sum(g => g.Id)
             .ToString();
@@ -17,7 +17,7 @@ class Solution : SolutionBase
 
     protected override string SolvePartTwo()
     {
-        return Input.Select(ParseGame)
+        return Input.Split("\n").Select(ParseGame)
             .Sum(g => g.Red * g.Green * g.Blue)
             .ToString();
     }

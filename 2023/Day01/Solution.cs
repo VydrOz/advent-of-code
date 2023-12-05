@@ -20,6 +20,7 @@ public class Solution : SolutionBase
     private string Solve(string regex)
     {
         return Input
+            .Split("\n")
             .Select(l => new
             {
                 first = Regex.Match(l, regex),

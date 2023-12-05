@@ -8,8 +8,8 @@ public abstract class SolutionBase
     public int Year { get; }
     public string Title { get; }
     public bool Debug { get; set; }
-    public IEnumerable<string> Input => LoadInput(Debug);
-    public IEnumerable<string> DebugInput => LoadInput(true);
+    public string Input => LoadInput(Debug);
+    public string DebugInput => LoadInput(true);
 
     public SolutionResult Part1 => Solve(SolvePartOne);
     public SolutionResult Part2 => Solve(SolvePartTwo);
@@ -62,16 +62,16 @@ public abstract class SolutionBase
         }
     }
 
-    IEnumerable<string> LoadInput(bool debug = false)
+    string LoadInput(bool debug = false)
     {
         var inputFilepath = $"./{Year}/Day{Day:D2}/{(debug ? "debug_" : "")}input.in";
 
         if (File.Exists(inputFilepath) && new FileInfo(inputFilepath).Length > 0)
         {
-            return File.ReadLines(inputFilepath);
+            return File.ReadAllText(inputFilepath);
         }
 
-        return Enumerable.Empty<string>();
+        return string.Empty;
     }
 
     public override string ToString() =>
