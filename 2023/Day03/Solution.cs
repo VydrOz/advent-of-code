@@ -11,7 +11,7 @@ class Solution : SolutionBase
 
     protected override string SolvePartOne()
     {
-        var rows = Input.ToArray();
+        var rows = Input.Split("\n").ToArray();
         var specChars = Parse(rows, new Regex(@"[^.0-9]"));
         var numbers = Parse(rows, new Regex(@"\d+"));
 
@@ -23,7 +23,7 @@ class Solution : SolutionBase
 
     protected override string SolvePartTwo()
     {
-        var rows = Input.ToArray();
+        var rows = Input.Split("\n").ToArray();
         var gears = Parse(rows, new Regex(@"\*"));
         var numbers = Parse(rows, new Regex(@"\d+"));
 
