@@ -1,8 +1,9 @@
 ﻿namespace AdventOfCode.Y2023.Day05;
 
 using Lib;
-using System.Formats.Tar;
+using Newtonsoft.Json;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
 class Solution : SolutionBase
@@ -11,9 +12,7 @@ class Solution : SolutionBase
 
     protected override string SolvePartOne()
     {
-        var almanac = GetAlmanac();
-
-        return "";
+        return ParseSeeds(GetAlmanac()).Min().ToString();
     }
 
     protected override string SolvePartTwo()
@@ -23,7 +22,7 @@ class Solution : SolutionBase
 
     Almanac GetAlmanac()
     {
-        var sections = Input.Split("\n\n");
+        var sections = Input.Split("\n\r\n");
 
         var seeds = Regex.Matches(sections[0], @"\d+")
             .Select(m => long.Parse(m.Value))
@@ -46,6 +45,25 @@ class Solution : SolutionBase
 
         return new Almanac(seeds, maps);
     }
+
+    long[] ParseSeeds(Almanac almanac)
+    {
+        var seeds = almanac.seeds;
+        foreach (var map in almanac.maps )
+        {
+            for (int i = 0; i < seeds.Length; i ++)
+            {
+                var entry = map.entries.FirstOrDefault(e => IsInRange(seeds[i], e.source));
+
+                seeds[i] = entry?.destination.start + (seeds[i] - entry?.source.start) ?? seeds[i];
+            }
+        }
+
+        return seeds;
+    }
+
+    bool IsInRange(long l, Range r)
+        => l == r.start || l == r.end || (l > r.start && l < r.end);
 }
 
 record Range(long start, long end);
