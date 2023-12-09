@@ -1,27 +1,65 @@
 ﻿using Lib;
 
-if (args.Length == 1)
+if (args.Length == 1 && SplitDate(args[0], out var date))
 {
-    var splitArgs = args[0].Split('/');
-    if (int.TryParse(splitArgs[0], out int year))
+    if (date.d > 0)
     {
-        if (splitArgs.Length == 2 && int.TryParse(splitArgs[1], out int day))
+        var solution = SolutionResolver.GetSolution(date.y, date.d);
+        if (solution != null)
         {
-            var solution = SolutionResolver.GetSolution(year, day);
             solution?.Print();
-            return;
         }
         else
         {
-            foreach (var solution in SolutionResolver.FetchSolutions(year))
-            {
-                solution?.Print();
-            }
-            return;
+            error($"Solution for Year {date.y} and Day {date.d} doesn't exist");
         }
+        
+        return;
+    }
+    else
+    {
+        foreach (var solution in SolutionResolver.FetchSolutions(date.y))
+        {
+            solution?.Print();
+        }
+
+        return;
     }
 }
 
-Console.ForegroundColor = ConsoleColor.Red;
-Console.WriteLine("Invalid Command");
-Console.ResetColor();
+error("Invalid Command");
+
+void error(string msg)
+{
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.WriteLine(msg);
+    Console.ResetColor();
+}
+
+bool SplitDate(string commandDate, out DateCommand dateCommand)
+{
+    bool success = false;
+    dateCommand = new DateCommand(-1, -1);
+    try
+    {    
+        var splitArgs = commandDate.Split('/');
+        if (splitArgs.Length == 1)
+        {
+            dateCommand = new DateCommand(int.Parse(splitArgs[0]), 0);
+            success = true;
+        }
+        else if (splitArgs.Length == 2)
+        {
+            dateCommand = new DateCommand(int.Parse(splitArgs[0]), int.Parse(splitArgs[1]));
+            success = true;
+        }
+    }
+    catch (Exception ex)
+    {
+        error(ex.Message);
+    }
+
+    return success;
+}
+
+record DateCommand(int y, int d);
